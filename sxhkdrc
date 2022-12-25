@@ -1,0 +1,26 @@
+super + w
+ brave
+
+super + v 
+ nemo
+
+super + n
+ notion-app-enhanced
+
+super + g
+ kotatogram-desktop
+
+super + shift + r
+ st -e ranger
+
+super + s
+ maim -s | xclip -selection clipboard -t image/png
+
+super + x
+ st -e pulsemixer
+
+super + shift + p
+ st -e sudo systemctl poweroff
+
+super + shift + m
+ st -e ncmpcpp
