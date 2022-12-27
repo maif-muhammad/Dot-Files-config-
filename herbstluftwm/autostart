@@ -9,10 +9,10 @@ hc() {
 hc emit_hook reload
 
 # xsetroot -solid '#5A8E3A'
-~/.fehbg &
-qbittorrent & 
+ ~/.fehbg &
 sxhkd -c ~/.config/sxhkdrc &
-xcompmgr -c &
+#xcompmgr -c &
+xrdb ~/.Xresources
 
 # MPD daemon start (if no other user instance exists)
 [ ! -s ~/.config/mpd/pid ] && mpd
@@ -22,8 +22,6 @@ xcompmgr -c &
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
-
-ibus-daemon -drx
 
 # remove all existing keybindings
 hc keyunbind --all
@@ -80,8 +78,10 @@ hc keybind $Mod-Control-Up      resize up +$resizestep
 hc keybind $Mod-Control-Right   resize right +$resizestep
 
 # tags
-tag_names=( {1..9} )
-tag_keys=( {1..9} 0 )
+ tag_names=( {1..9} )
+ tag_keys=( {1..9} 0 )
+
+
 
 hc rename default "${tag_names[0]}" || true
 for i in "${!tag_names[@]}" ; do
@@ -144,7 +144,7 @@ hc set frame_transparent_width 0
 hc set frame_gap 0
 hc attr theme.title_font 'mononoki NF:pixelsize=12'
 
-hc attr theme.active.color '#008080'
+hc attr theme.active.color '#5A8E3A'
 hc attr theme.active.border_width 5
 hc attr theme.active.inner_width 1
 
@@ -179,6 +179,8 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 hc rule fixedsize floating=on
 
 hc rule title~'ncmpcpp' tag=3 floating=on floatplacement=center floating_geometry=600x400
+hc rule class~'qBittorrent' tag=9 floating=on floatplacement=center
+
 
 hc set tree_style '╾│ ├└╼─┐'
 
@@ -190,13 +192,6 @@ hc unlock
 # or simply:
 # hc detect_monitors
 
-# find the panel
-panel=~/.config/herbstluftwm/panel.sh
-[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-for monitor in $(hc list_monitors | cut -d: -f1) ; do
-    # start it on each monitor
-    "$panel" "$monitor" &
-done
 # FIND THE PANEL #
 #----------------#
 panel=~/.config/herbstluftwm/panel.sh
@@ -206,3 +201,5 @@ for monitor in $(hc list_monitors | cut -d: -f1) ; do
     "$panel" "$monitor" &
 done
 hc split vertical 0.6; hc remove
+
+qbittorrent &

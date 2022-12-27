@@ -121,6 +121,7 @@ hc pad $monitor $panel_height
                 # clickable tags if using SVN dzen
                 echo -n "^ca(1,$hc_quoted focus_monitor \"$monitor\" && "
                 echo -n "$hc_quoted use \"${i:1}\") ${i:1} ^ca()"
+
             else
                 # non-clickable tags if using older dzen
                 echo -n " ${i:1} "
@@ -128,8 +129,20 @@ hc pad $monitor $panel_height
         done
         echo -n "$separator"
         echo -n "^bg()^fg() ${windowtitle//^/^^}"
+
+
+        #Internet
+        #internet=$(sh ~/net.sh enp3s0)
+
+        #Vol
+	vol=$(amixer -c 0 get Master | tail -n 1 | cut -d '[' -f 2 | sed 's/%.*//g' | sed -n 1p)
+        
+        #Ram
+        mem=$(free -m | awk 'NR==2{printf "RAM: %s/%sMB \n", $3,$2}')
+
         # small adjustments
-        right="$separator^bg() $date $separator"
+        mpc_current=$(mpc current)
+        right="$separator^fg() $mem $separator^fg() $mpc_current $separator^fg() $vol $separator^fg() $date $separator $echo Kriti"  
         right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
         # get width of right aligned text.. and add some space..
         width=$($textwidth "$font" "$right_text_only    ")
